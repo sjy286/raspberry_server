@@ -61,10 +61,10 @@
         <div class="container-fluid">
             <h1>Settings</h1>
             <p>알림 받기 </p>
-            <form method="post" action = "/setting_save">
+            <form method="post" action = "/setting/save">
                 <!-- Rounded switch -->
                 <label class="switch">
-                    <input type="checkbox" <%=checked_alert%>>
+                    <input type="checkbox" name = "noti_switch" value = "noti_on" <%=checked_alert%>>
                     <span class="slider round"></span>
                 </label>
                 <br>
