@@ -18,7 +18,8 @@ router.get('/', function(req, res, next) {
         if(err) {
             console.log(err);
         } else{
-            console.log(rows[0].is_noti);
+            console.log(rows);
+            console.log(fields);
             if(rows[0].is_noti == 1) {
                 isCheckedAlert = 'checked';
             }

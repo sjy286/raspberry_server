@@ -8,6 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var settingRouter = require('./routes/setting');
+var blankRouter = require('./routes/blank');
+var errorRouter = require('./routes/error');
+var voiceMailLogRouter = require('./routes/voice_mail_log');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -28,6 +31,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/setting', settingRouter);
+app.use('/blank', blankRouter);
+app.use('/error', errorRouter);
+app.use('/voice_mail_log', voiceMailLogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
