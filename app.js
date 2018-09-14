@@ -4,15 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var current_video_call_state = 0;
+
 var indexRouter = require('./routes/index');		//메인페이지
 var settingRouter = require('./routes/setting');		//각종 setting
 var blankRouter = require('./routes/blank');	//템플릿 페이지 
 var errorRouter = require('./routes/error');		//에러 페이지
 var voiceMailLogRouter = require('./routes/voice_mail_log');		//음성메시지 기록 페이지
 var videoCallLogRouter = require('./routes/video_call_log');		//영상통화 기록 페이지
-var mobileRouter = require('./routes/mobile');  //모바일 전용 라우터
-var linuxRouter = require('./routes/linux'); //리눅스 프로그램 전용 라우터
-
+var mobileRouter = require('./routes/mobile')(current_video_call_state);  //모바일 전용 라우터
+var linuxRouter = require('./routes/linux')(current_video_call_state); //리눅스 프로그램 전용 라우터
+var videoCallStreamingRouter = require('./routes/video_call_streaming'); //스트리밍 페이지
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -37,6 +39,7 @@ app.use('/voice_mail_log', voiceMailLogRouter);
 app.use('/video_call_log', videoCallLogRouter);
 app.use('/mobile', mobileRouter);
 app.use('/linux', linuxRouter);
+app.use('/video_call_streaming', videoCallStreamingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
