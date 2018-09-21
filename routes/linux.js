@@ -36,7 +36,7 @@ module.exports = function (current_video_call_state) {
     });
 
 //linux/voice_mail_save
-    router.get('/voice_mail_save', function(req, res, next) {
+    router.get('/voice_mail_save', function(req, res, next) {   //후에 post로 고쳐서 확인 - 음성파일 받아야 되기 때문에
         //받은 음성파일과 함께 현재시각 DB에 저장
         //후에 웹브라우저와 안드로이드에게 푸시메시지 발송
         fcm.send(push_data, function(err, response) {
