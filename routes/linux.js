@@ -3,7 +3,8 @@ module.exports = function (current_video_call_state) {
     var router = express.Router();
     var app = express();
     var FCM = require('fcm-node');
-    var fcm = new FCM("AAAAnXVPz8A:APA91bG_JoiQOkaYCcZxsX8JOfIQ5vgrhdqnNFImpqZvoAegqObmz-kFrnn-e25xjBtp-KZkhOfqXvM83wU1BBazKZ8O2KYJF8LUR0zaJlzicRs5VzyWOz0MkserOvCXXGpRJtYKfrbz");
+    var serverKey = require('../config/FCMserverkey');
+    var fcm = new FCM(serverKey.serverkey);
     var client_token = 'eB6NEGJMpJw:APA91bHKcYppGbtT9teUKwe-lufqcG5o-GfF-7WsIdS1bcRPmgyp3b3b3JYfcieyHiVRpGPddBjRMuouw7QfdFbv2fsFjJOFfvtQkbeBQGJkMiWJkx6746SQWQ_zWHJmVsGOtPdcaCAJ';
     /** 발송할 Push 메시지 내용 */
     var push_data = {
@@ -11,11 +12,11 @@ module.exports = function (current_video_call_state) {
         to: client_token,
         // App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
         notification: {
-            title: "Hello Node",
-            body: "Node로 발송하는 Push 메시지 입니다.",
+            title: "Hello Node 운영체제에서 처리하는 부분",
+            body: "Node로 발송하는 Push 메시지 입니다. - 실행중이 아닐 때",
             sound: "default",
             click_action: "FCM_PLUGIN_ACTIVITY",
-            icon: "fcm_push_icon"
+            icon: "ic_launcher"
         },
         // 메시지 중요도
         priority: "high",
@@ -23,8 +24,8 @@ module.exports = function (current_video_call_state) {
         restricted_package_name: "com.example.word.raspberrytest",
         // App에게 전달할 데이터
         data: {
-            num1: 2000,
-            num2: 3000
+            num1: '실행중일 때 나타나는 알림',
+            num2: '보내고 싶은 데이터 값을 넣는다'
         }
     };
 
