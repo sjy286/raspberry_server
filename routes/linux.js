@@ -63,7 +63,7 @@ module.exports = function (current_video_call_state) {
 //linux/voice_mail_save
     router.post('/voice_mail_save', upload.single('voice_mail'), function(req, res, next) {   //후에 post로 고쳐서 확인 - 음성파일 받아야 되기 때문에
         //받은 음성파일과 함께 현재시각 DB에 저장
-        var params = [ datetime, 'Example Memo' ]
+        var params = [ datetime, 'insert memo' ]
         conn.query(voice_mail_save_sql, params, function(err, rows, fields) {
             if(err) {
                 console.log(err);
