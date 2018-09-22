@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!-- 이페이지는 업로드 테스트 용으로서 나중에 삭제 요망 - 리눅스프로그램에서 post 요청 날려 줘야 함-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>upload file</title>
+</head>
+<h1>upload file</h1>
+
+<form method="post" action="/linux/voice_mail_save" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><label>file</label></td>
+            <td><input type="file" name="voice_mail" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="upload" name="summit" />
+</form>
+<body>
+
+</body>
+</html>

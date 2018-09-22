@@ -1,7 +1,13 @@
 module.exports = function (current_video_call_state) {
     var express = require('express');
     var router = express.Router();
-    var app = express();
+
+    var DBManager = require('../database/DBManager.js');
+    var conn = DBManager.getConnection();
+    var voice_mail_save_sql ='insert into log (current_datetime, memo) values(?, ?);';
+    var voice_mail_save_sql2 = 'insert into writes (device_id, log_no, file, function_type) values(\'deviceID\',?,?,\'audio\');';
+    var datetime = new Date();
+
     var FCM = require('fcm-node');
     var serverKey = require('../config/FCMserverkey');
     var fcm = new FCM(serverKey.serverkey);
@@ -29,6 +35,24 @@ module.exports = function (current_video_call_state) {
         }
     };
 
+    var multer = require('multer');
+
+    var voice_mail_storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            if(file.mimetype.split('/')[0] == 'audio') {
+                cb(null, 'upload/voice_mail/');
+            } else if(file.mimetype.split('/')[0] == 'image') {
+                cb(null, 'upload/guest_picture/');
+            } else {
+                cb(null, 'upload/');
+            }
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    });
+    var upload = multer({ storage: voice_mail_storage});
+
 //linux/video_call_request - Android App에서 통화 거절 0 통화 승인 1로 response
     router.get('/video_call_request', function(req, res, next) {
         //영상통화가 있음을 Android App에 알림 - 푸시 -- 소켓써야 될듯 socket.io - 양방향 통신 구현
@@ -37,8 +61,39 @@ module.exports = function (current_video_call_state) {
     });
 
 //linux/voice_mail_save
-    router.get('/voice_mail_save', function(req, res, next) {   //후에 post로 고쳐서 확인 - 음성파일 받아야 되기 때문에
+    router.post('/voice_mail_save', upload.single('voice_mail'), function(req, res, next) {   //후에 post로 고쳐서 확인 - 음성파일 받아야 되기 때문에
         //받은 음성파일과 함께 현재시각 DB에 저장
+        var params = [ datetime, 'Example Memo' ]
+        conn.query(voice_mail_save_sql, params, function(err, rows, fields) {
+            if(err) {
+                console.log(err);
+            }  else {
+                console.log(rows);
+            }
+        });
+
+        var current_insert_log_no = 0;
+        conn.query('select max(log_no) as max_log_no from log', function(err, rows, fields) {
+            if(err) {
+                console.log(err);
+            }  else {
+                console.log(rows);
+                current_insert_log_no = rows[0].max_log_no;
+                var params2 = [ current_insert_log_no ,'/voice_mail_upload/'+ req.file.originalname];
+                conn.query(voice_mail_save_sql2, params2, function(err, rows, fields) {
+                    if(err) {
+                        console.log(err);
+                    }  else {
+                        console.log(rows);
+                    }
+                });
+
+            }
+        });
+
+        console.log('저장완료 : ' + req.file.originalname);
+        res.send('저장완료 : ' + req.file.originalname);
+
         //후에 웹브라우저와 안드로이드에게 푸시메시지 발송
         fcm.send(push_data, function(err, response) {
             if (err) {
@@ -50,7 +105,6 @@ module.exports = function (current_video_call_state) {
             console.log('Push메시지가 발송되었습니다.');
             console.log(response);
         });
-        res.send("여기 들어와지긴 하는거?");
     });
 
 //linux/video_call_start

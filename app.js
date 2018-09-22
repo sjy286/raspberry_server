@@ -15,6 +15,7 @@ var videoCallLogRouter = require('./routes/video_call_log');		//영상통화 기
 var mobileRouter = require('./routes/mobile')(current_video_call_state);  //모바일 전용 라우터
 var linuxRouter = require('./routes/linux')(current_video_call_state); //리눅스 프로그램 전용 라우터
 var videoCallStreamingRouter = require('./routes/video_call_streaming'); //스트리밍 페이지
+var uploadRouter = require('./routes/upload');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -40,6 +41,10 @@ app.use('/video_call_log', videoCallLogRouter);
 app.use('/mobile', mobileRouter);
 app.use('/linux', linuxRouter);
 app.use('/video_call_streaming', videoCallStreamingRouter);
+app.use('/upload', uploadRouter);
+
+app.use('/voice_mail_upload', express.static('upload/voice_mail'));
+app.use('/testUpload', express.static('upload')); //테스트용
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
