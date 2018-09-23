@@ -11,6 +11,7 @@ var settingRouter = require('./routes/setting');		//각종 setting
 var blankRouter = require('./routes/blank');	//템플릿 페이지 
 var errorRouter = require('./routes/error');		//에러 페이지
 var voiceMailLogRouter = require('./routes/voice_mail_log');		//음성메시지 기록 페이지
+var voiceMailDelRouter = require('./routes/delete_voice_mail');     //음성메시지 기록 삭제 처리
 var videoCallLogRouter = require('./routes/video_call_log');		//영상통화 기록 페이지
 var mobileRouter = require('./routes/mobile')(current_video_call_state);  //모바일 전용 라우터
 var linuxRouter = require('./routes/linux')(current_video_call_state); //리눅스 프로그램 전용 라우터
@@ -37,6 +38,7 @@ app.use('/setting', settingRouter);
 app.use('/blank', blankRouter);
 app.use('/error', errorRouter);
 app.use('/voice_mail_log', voiceMailLogRouter);
+app.use('/delete_voice_mail',voiceMailDelRouter);
 app.use('/video_call_log', videoCallLogRouter);
 app.use('/mobile', mobileRouter);
 app.use('/linux', linuxRouter);
