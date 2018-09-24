@@ -138,7 +138,7 @@
                             </thead>
                             <tfoot>
                             <tr>
-                                <th><input type="button" name="deleteBtn" value="삭제" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal"/></th>
+                                <th><input type="button" name="deleteBtn" value="삭제" class="btn btn-primary"  data-toggle="modal" data-target="#deleteModal" /></th>
                                 <th>방문시각</th>
                                 <th>메모</th>
                                 <th>음성메시지 확인</th>
@@ -229,6 +229,25 @@
     </div>
 </div>
 
+<!--Confirm Modal-->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">삭제할 기록을 하나 이상 선택해주세요.</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">확인을 누르면 창이 사라집니다.</div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" onclick=delete_submit()>확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -248,8 +267,18 @@
 
 <script>
     function delete_submit() {
-        var form = document.getElementById("delete_voice_mail_form");
-        form.submit();
+        var isChecked = false;
+        var arr_log = document.getElementsByName('voice_mail_log');
+        for(var i = 0; i < arr_log.length; i++) {
+            isChecked = true;
+            break;
+        }
+        if(!isChecked) {
+            alert("삭제할 항목이 없습니다.");
+        } else {
+            var form = document.getElementById("delete_voice_mail_form");
+            form.submit();
+        }
     }
 </script>
 
