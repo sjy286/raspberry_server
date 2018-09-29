@@ -7,7 +7,7 @@ var logger = require('morgan');
 var current_video_call_state = 0;
 
 var indexRouter = require('./routes/index');		//메인페이지
-var settingRouter = require('./routes/setting');		//각종 setting
+var settingsRouter = require('./routes/settings');		//각종 setting
 var blankRouter = require('./routes/blank');	//템플릿 페이지 
 var errorRouter = require('./routes/error');		//에러 페이지
 var voiceMailLogRouter = require('./routes/voice_mail_log');		//음성메시지 기록 페이지
@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', indexRouter);
-app.use('/setting', settingRouter);
+app.use('/settings', settingsRouter);
 app.use('/blank', blankRouter);
 app.use('/error', errorRouter);
 app.use('/voice_mail_log', voiceMailLogRouter);
@@ -46,7 +46,7 @@ app.use('/video_call_streaming', videoCallStreamingRouter);
 app.use('/upload', uploadRouter);
 
 app.use('/voice_mail_upload', express.static('upload/voice_mail'));
-app.use('/testUpload', express.static('upload')); //테스트용
+app.use('/absence_voice_mail', express.static('upload/absence_voice_mail')); //부재시 음성메시지 출력파일
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

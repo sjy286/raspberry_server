@@ -20,7 +20,7 @@ function delete_voice_mail(param) {
             var file_name = rows[0].file.split('/');
             //파일도 삭제해야 됨
             fs.unlink('./upload/voice_mail/' + file_name[2], err => {
-                if (err) 
+                if (err) {
                     return console.log(err);
                 }
                 console.log('file is deleted');
