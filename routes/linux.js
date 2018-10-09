@@ -11,7 +11,7 @@ module.exports = function (current_video_call_state) {
     var FCM = require('fcm-node');
     var serverKey = require('../config/FCMserverkey');
     var fcm = new FCM(serverKey.serverkey);
-    var client_token = 'eB6NEGJMpJw:APA91bHKcYppGbtT9teUKwe-lufqcG5o-GfF-7WsIdS1bcRPmgyp3b3b3JYfcieyHiVRpGPddBjRMuouw7QfdFbv2fsFjJOFfvtQkbeBQGJkMiWJkx6746SQWQ_zWHJmVsGOtPdcaCAJ';
+    var client_token = 'c6vVWlnIEHo:APA91bEccmie3PqaKif54PVZfETTV4vuS7BEEUWZEu8l-IUbheG8YzApSzNWQXetN5zjlRJRqj4EHZsc2Qlth3D8DclXyVhVKvD2y7JQkemUQ8enohnwM1SrcKmJTGMcY2-NWt2A2kq_';
     /** 발송할 Push 메시지 내용 */
     var push_data = {
         // 수신대상
@@ -27,7 +27,7 @@ module.exports = function (current_video_call_state) {
         // 메시지 중요도
         priority: "high",
         // App 패키지 이름
-        restricted_package_name: "com.example.word.raspberrytest",
+        restricted_package_name: "com.example.hhj.rmb_android",
         // App에게 전달할 데이터
         data: {
             num1: '실행중일 때 나타나는 알림',

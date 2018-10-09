@@ -1,3 +1,3 @@
 module.exports = {
-    serverkey : 'AAAAnXVPz8A:APA91bG_JoiQOkaYCcZxsX8JOfIQ5vgrhdqnNFImpqZvoAegqObmz-kFrnn-e25xjBtp-KZkhOfqXvM83wU1BBazKZ8O2KYJF8LUR0zaJlzicRs5VzyWOz0MkserOvCXXGpRJtYKfrbz'
+    serverkey : 'AAAAPlB3k2k:APA91bG0EpEZcq1BVpBThxPY4C6ctAq7YfWk25zsryEDiHlfVzBC2JNn_dePBS_QFXPifXZsUdyadi3FalaYvJ9Fdcvj9HISYauq602czSymX0wN-E6J0sVEr8sdfMLmT75RENRrHf5c'
 }
