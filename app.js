@@ -13,6 +13,7 @@ var errorRouter = require('./routes/error');		//에러 페이지
 var voiceMailLogRouter = require('./routes/voice_mail_log');		//음성메시지 기록 페이지
 var voiceMailDelRouter = require('./routes/delete_voice_mail');     //음성메시지 기록 삭제 처리
 var videoCallLogRouter = require('./routes/video_call_log');		//영상통화 기록 페이지
+var videoCallDelRouter = require('./routes/delete_video_call');
 var mobileRouter = require('./routes/mobile')(current_video_call_state);  //모바일 전용 라우터
 var linuxRouter = require('./routes/linux')(current_video_call_state); //리눅스 프로그램 전용 라우터
 var videoCallStreamingRouter = require('./routes/video_call_streaming'); //스트리밍 페이지
@@ -39,6 +40,7 @@ app.use('/blank', blankRouter);
 app.use('/error', errorRouter);
 app.use('/voice_mail_log', voiceMailLogRouter);
 app.use('/delete_voice_mail',voiceMailDelRouter);
+app.use('/delete_video_call',videoCallDelRouter);
 app.use('/video_call_log', videoCallLogRouter);
 app.use('/mobile', mobileRouter);
 app.use('/linux', linuxRouter);
@@ -47,6 +49,7 @@ app.use('/upload', uploadRouter);
 
 app.use('/voice_mail_upload', express.static('upload/voice_mail'));
 app.use('/absence_voice_mail', express.static('upload/absence_voice_mail')); //부재시 음성메시지 출력파일
+app.use('/guest_picture', express.static('upload/guest_picture'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
