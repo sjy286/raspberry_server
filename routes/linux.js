@@ -15,7 +15,8 @@ module.exports = function (current_video_call_state) {
     var FCM = require('fcm-node');
     var serverKey = require('../config/FCMserverkey');
     var fcm = new FCM(serverKey.serverkey);
-    var client_token = 'c6vVWlnIEHo:APA91bEccmie3PqaKif54PVZfETTV4vuS7BEEUWZEu8l-IUbheG8YzApSzNWQXetN5zjlRJRqj4EHZsc2Qlth3D8DclXyVhVKvD2y7JQkemUQ8enohnwM1SrcKmJTGMcY2-NWt2A2kq_';
+    //var client_token = 'c6vVWlnIEHo:APA91bEccmie3PqaKif54PVZfETTV4vuS7BEEUWZEu8l-IUbheG8YzApSzNWQXetN5zjlRJRqj4EHZsc2Qlth3D8DclXyVhVKvD2y7JQkemUQ8enohnwM1SrcKmJTGMcY2-NWt2A2kq_';
+    var client_token = 'cKdTFNB9P_o:APA91bFORjzIeGJn5FTYgqd8YOG48L2xx5HEPZhomefAeXnn10pwqPyYc8YhVdFRpD67RK7Mb3aWirsdiQgKDVzBEwT8ISAYUwWmSRp9n4zeNO0fHtZucWPTQwzPW49dKTLRiWTGQg4l';
 
     var multer = require('multer');
 
@@ -56,7 +57,8 @@ module.exports = function (current_video_call_state) {
             restricted_package_name: "com.example.hhj.rmb_android",
             // App에게 전달할 데이터
             data: {
-                num1: '영상통화요청'
+                num1: '영상통화요청',
+                index: '2'
             }
         };
         fcm.send(push_data, function(err, response) {
@@ -114,7 +116,7 @@ module.exports = function (current_video_call_state) {
             });
 
             console.log('저장완료 : ' + req.file.originalname);
-            res.send('저장완료 : ' + req.file.originalname);
+            //res.send('저장완료 : ' + req.file.originalname);
 
             /** 발송할 Push 메시지 내용 */
             var push_data = {
@@ -135,7 +137,8 @@ module.exports = function (current_video_call_state) {
                 // App에게 전달할 데이터
                 data: {
                     num1: '음성메시지가 도착했습니다.',
-                    num2: '파일명' + req.file.originalname
+                    num2: '파일명' + req.file.originalname,
+                    index: '1'
                 }
             };
 
@@ -193,6 +196,42 @@ module.exports = function (current_video_call_state) {
                 }
             });
             console.log('저장완료 : ' + req.file.originalname);
+            /** 발송할 Push 메시지 내용 */
+            var push_data = {
+                // 수신대상
+                to: client_token,
+                // App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
+                /*
+                notification: {
+                    title: "음성메시지가 도착했습니다.",
+                    body: "파일명 - " + req.file.originalname,
+                    sound: "default",
+                    click_action: "FCM_PLUGIN_ACTIVITY",
+                    icon: "ic_launcher"
+                },
+                */
+                // 메시지 중요도
+                priority: "high",
+                // App 패키지 이름
+                restricted_package_name: "com.example.hhj.rmb_android",
+                // App에게 전달할 데이터
+                data: {
+                    num1: '음성메시지가 도착했습니다.',
+                    num2: '파일명' + req.file.originalname
+                }
+            };
+
+            //후에 웹브라우저와 안드로이드에게 푸시메시지 발송
+            fcm.send(push_data, function(err, response) {
+                if (err) {
+                    console.error('Push메시지 발송에 실패했습니다.');
+                    console.error(err);
+                    return;
+                }
+
+                console.log('Push메시지가 발송되었습니다.');
+                console.log(response);
+            });
         });
         res.json({ msg : "저장성공"});
     });
